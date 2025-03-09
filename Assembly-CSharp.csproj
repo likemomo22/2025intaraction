@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Assets\Unity UI Samples\Scripts\PanelManager.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ChangeColor.cs" />
+    <Compile Include="Assets\Utils\WebSocketUtils\WebSocketUtils.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ShowSliderValue.cs" />
     <Compile Include="Assets\UI pack\Scripts\FillValueNumber.cs" />
     <Compile Include="Assets\Scripts\Camera\OpenCamera.cs" />
