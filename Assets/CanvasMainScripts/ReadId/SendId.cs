@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ReadId : MonoBehaviour
+public class SendId : MonoBehaviour
 {
     public Button confirmButton;
     public InputField userIdInput;
@@ -27,7 +27,7 @@ public class ReadId : MonoBehaviour
         await SendUserId(userId);
     }
 
-    private async Task SendUserId(string userId)
+    private async Task SendUserId(string userIdInputed)
     {
         try
         {
@@ -36,7 +36,7 @@ public class ReadId : MonoBehaviour
             if (isConnected)
             {
                 //1. 发送消息
-                await _webSocketUtils.SendMessageAsync(userId);
+                await _webSocketUtils.SendMessageAsync(new{type="userId",userId=userIdInputed});
                 //2. 接收消息
                 var response = await _webSocketUtils.ReceiveResponseAsync();
                 //3. 发送关闭请求
@@ -52,7 +52,9 @@ public class ReadId : MonoBehaviour
         finally
         {
             if (_webSocketUtils.WebSocketStates)
+            {
                 await _webSocketUtils.CloseConnectionAsync();
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class WebSocketUtils
@@ -37,11 +38,11 @@ public class WebSocketUtils
         }
     }
 
-    public async Task SendMessageAsync(string message)
+    public async Task SendMessageAsync(object message)
     {
         try
         {
-            var jsonData = $"{{\"type\":\"userId\",\"userId\":\"{message}\"}}";
+            var jsonData = JsonConvert.SerializeObject(message);
             var messageBuffer = Encoding.UTF8.GetBytes(jsonData);
 
             await _webSocket.SendAsync(new ArraySegment<byte>(messageBuffer), WebSocketMessageType.Text, true,

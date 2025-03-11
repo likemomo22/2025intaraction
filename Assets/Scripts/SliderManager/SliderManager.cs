@@ -23,9 +23,9 @@
             slider2.maxValue = _maxValue1;
             slider3.maxValue = _maxValue1;
             
-            UpdateValue1(PrintMaxValues.MaxChannel1);
-            UpdateValue2(PrintMaxValues.MaxChannel2);
-            UpdateValue3(PrintMaxValues.MaxChannel3);
+            UpdateValue1(SetMaxValues.MaxChannel1);
+            UpdateValue2(SetMaxValues.MaxChannel2);
+            UpdateValue3(SetMaxValues.MaxChannel3);
                 
             slider1.onValueChanged.AddListener(UpdateValue1);
             slider2.onValueChanged.AddListener(UpdateValue2);
@@ -36,20 +36,20 @@
         {
             valueText1.text = value.ToString("F2");
             slider1.value = value;
-            PrintMaxValues.MaxChannel1 = value;
-            Debug.Log(PrintMaxValues.MaxChannel1);
+            SetMaxValues.MaxChannel1 = value;
+            Debug.Log(SetMaxValues.MaxChannel1);
         }
         void UpdateValue2(float value)
         {
             valueText2.text =value.ToString("F2");
             slider2.value = value;
-            PrintMaxValues.MaxChannel2 = value;
+            SetMaxValues.MaxChannel2 = value;
         }
 
         void UpdateValue3(float value)
         {
             valueText3.text = value.ToString("F2");       
             slider3.value = value;
-            PrintMaxValues.MaxChannel3 = value;
+            SetMaxValues.MaxChannel3 = value;
         }
     }

@@ -10,9 +10,9 @@ public static class EmgDataRegularization
             }
 
             // 读取每个通道的最大值
-            float maxChannel1 = PrintMaxValues.MaxChannel1 > 0 ? PrintMaxValues.MaxChannel1 : 7000f;
-            float maxChannel2 = PrintMaxValues.MaxChannel2 > 0 ? PrintMaxValues.MaxChannel2 : 7000f;
-            float maxChannel3 = PrintMaxValues.MaxChannel3 > 0 ? PrintMaxValues.MaxChannel3 : 7000f;
+            float maxChannel1 = SetMaxValues.MaxChannel1 > 0 ? SetMaxValues.MaxChannel1 : 7000f;
+            float maxChannel2 = SetMaxValues.MaxChannel2 > 0 ? SetMaxValues.MaxChannel2 : 7000f;
+            float maxChannel3 = SetMaxValues.MaxChannel3 > 0 ? SetMaxValues.MaxChannel3 : 7000f;
             
             float[] result = new float[emgDatas.Length];
             for (int i=0; i < emgDatas.Length; i++)

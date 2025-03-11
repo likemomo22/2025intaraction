@@ -69,12 +69,12 @@
     <Compile Include="Assets\CanvasMaxValueScripts\CounterChanger\CounterChanger.cs" />
     <Compile Include="Assets\Scripts\EMGGraphController\EMGGraphController.cs" />
     <Compile Include="Assets\DataDiagram\DataDiagram\Script\DD_LineButton.cs" />
-    <Compile Include="Assets\CanvasPrintMaxValuesScripts\PrintMaxValues\PrintMaxValues.cs" />
+    <Compile Include="Assets\CanvasPrintMaxValuesScripts\SetMaxValues\SetMaxValues.cs" />
+    <Compile Include="Assets\CanvasMainScripts\ReadId\SendId.cs" />
     <Compile Include="Assets\Scripts\CameraDataReceiver.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\DragMe.cs" />
     <Compile Include="Assets\CanvasMaxValueScripts\ToGetMaxValueButtonHandler\ToGetMaxValueButtonHandler.cs" />
     <Compile Include="Assets\CanvasMaxValueScripts\ImageChanger\ImageChanger.cs" />
-    <Compile Include="Assets\CanvasMainScripts\ReadId\ReadId.cs" />
     <Compile Include="Assets\DataDiagram\DataDiagram\Script\DD_DataDiagram.cs" />
     <Compile Include="Assets\DataDiagram\DataDiagram\Script\DD_CoordinateAxis.cs" />
     <Compile Include="Assets\ColorScripts\GragidentUI.cs" />
@@ -382,6 +382,9 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>C:\Users\munek\My project\Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:\Users\munek\My project\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.56f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>

@@ -38,13 +38,13 @@
             switch (index)
             {
                 case 1:
-                    maxValue = PrintMaxValues.MaxChannel1;
+                    maxValue = SetMaxValues.MaxChannel1;
                     break;
                 case 2:
-                    maxValue = PrintMaxValues.MaxChannel2;
+                    maxValue = SetMaxValues.MaxChannel2;
                     break;
                 case 3:
-                    maxValue = PrintMaxValues.MaxChannel3;
+                    maxValue = SetMaxValues.MaxChannel3;
                     break;
                 default:
                     Debug.LogWarning($"⚠ 未知的 index: {index}");
