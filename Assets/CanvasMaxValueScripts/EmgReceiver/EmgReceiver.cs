@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class EmgReceiver : MonoBehaviour
 {
+    public Button PrintMaxValueButton;
+    private WebSocketUtils _webSocketUtils;
     private CancellationTokenSource _cancellationTokenSource;
 
     private bool _isReceiving;
@@ -25,6 +27,8 @@ public class EmgReceiver : MonoBehaviour
 
     private async void Start()
     {
+        PrintMaxValueButton.onClick.AddListener(StopWebSocket);
+        _webSocketUtils = new WebSocketUtils();
         _smoothedValueProcessor = new SmoothedValue();
         processedEmgData = new float[0];
         _maxEnergyBarHandler = FindObjectOfType<MaxEnergyBarHandler>();
@@ -32,6 +36,14 @@ public class EmgReceiver : MonoBehaviour
         _recentIndex = -1;
 
         await StartReceiving();
+    }
+
+    private async void  StopWebSocket()
+    {
+        if (_webSocketUtils.WebSocketIsOpened)
+        {
+            await _webSocketUtils.SendCloseRequestAsync();
+        }
     }
 
     private void Update()
@@ -46,15 +58,20 @@ public class EmgReceiver : MonoBehaviour
 
     private async void OnDestroy()
     {
-       await StopReceiving();
+        if (_webSocketUtils.WebSocketIsOpened)
+        {
+            await _webSocketUtils.SendCloseRequestAsync();
+        }
+       // await StopReceiving();
     }
     
     private async void OnDisable()
     {
-        if (_webSocket != null && _webSocket.State == WebSocketState.Open)
+        if (_webSocketUtils.WebSocketIsOpened)
         {
-            await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Clint closed", CancellationToken.None);
+            await _webSocketUtils.SendCloseRequestAsync();
         }
+        // await StopReceiving();
     }
     public async Task StartReceiving()
     {
@@ -63,39 +80,30 @@ public class EmgReceiver : MonoBehaviour
 
         _cancellationTokenSource = new CancellationTokenSource();
 
-        _webSocket = new ClientWebSocket();
-        await _webSocket.ConnectAsync(new Uri("ws://127.0.0.1:8000/getMaxValue"), CancellationToken.None);
-        Debug.Log("Connected to FastAPI WebSocket");
-
-        await ReceiveData( _cancellationTokenSource.Token);
-    }
-
-    private async Task ReceiveData( CancellationToken cancellationToken)
-    {
-        var buffer = new byte[1024 * 512];
-
-        while (_webSocket.State == WebSocketState.Open)
+        try
         {
-            if (cancellationToken.IsCancellationRequested)
+            var isConnect = await _webSocketUtils.ConnectAsync("ws://127.0.0.1:8000/getMaxValue");
+            if (isConnect)
             {
-                Debug.Log("Stopping WebSocket Data Receiving");
-                break;
+                await _webSocketUtils.ReceiveLoopAsync(ProcessReceivedData,1024*512);
             }
-
-            var result = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-            if (result.MessageType == WebSocketMessageType.Text)
-            {
-                var jsonString = Encoding.UTF8.GetString(buffer, 0, result.Count);
-
-                var emgData = JsonUtility.FromJson<EmgData>(jsonString);
-                processedEmgData = EmgDataRegularization.getRegulatedEmgData(emgData.emgDatas);
-                Debug.Log("test: "+testIndex);
-                _regulatedEmgData = _smoothedValueProcessor.GetSmoothedValue(processedEmgData[testIndex]);
-            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"❌ 失败: {ex.Message}");
         }
     }
 
+    private void ProcessReceivedData(string jsonString)
+    {
+        var emgData = JsonUtility.FromJson<EmgData>(jsonString);
+        processedEmgData = EmgDataRegularization.getRegulatedEmgData(emgData.emgDatas);
+        Debug.Log("test: "+testIndex);
+        _regulatedEmgData = _smoothedValueProcessor.GetSmoothedValue(processedEmgData[testIndex]);
+    }
+
+
+ 
     public void SetActiveChannel(int newIndex)
     {
         if (testIndex == newIndex)
@@ -108,28 +116,23 @@ public class EmgReceiver : MonoBehaviour
         testIndex = newIndex;
     }
 
-    public async Task StopReceiving()
-    {
-        if (!_isReceiving)
-            return;
-
-        await Task.Yield(); // ✅ 避免 `CS1998` 警告
-
-        _isReceiving = false;
-
-        if (_cancellationTokenSource != null)
-        {
-            _cancellationTokenSource.Cancel();
-            _cancellationTokenSource.Dispose();
-            _cancellationTokenSource = null;
-        }
-
-        if (_webSocket != null && _webSocket.State == WebSocketState.Open)
-        {
-            await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Clint closed", CancellationToken.None);
-            Debug.Log("WebSocket closed");
-        }
-    }
+    // public async Task StopReceiving()
+    // {
+    //     if (!_isReceiving)
+    //         return;
+    //
+    //     await Task.Yield(); // ✅ 避免 `CS1998` 警告
+    //
+    //     _isReceiving = false;
+    //
+    //     if (_cancellationTokenSource != null)
+    //     {
+    //         _cancellationTokenSource.Cancel();
+    //         _cancellationTokenSource.Dispose();
+    //         _cancellationTokenSource = null;
+    //     }
+    //     
+    // }
 }
 
 [Serializable]

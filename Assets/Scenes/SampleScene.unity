@@ -6657,6 +6657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4ed1343d4e4a10ba43d9abd1a6cd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PrintMaxValueButton: {fileID: 687102550}
 --- !u!1 &215617167
 GameObject:
   m_ObjectHideFlags: 0
@@ -24664,6 +24665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aec261536ae415c927dfeb931a2d8d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toGameCanvasButton: {fileID: 1039901112}
   planeRenderer: {fileID: 751510778}
 --- !u!64 &751510777
 MeshCollider:

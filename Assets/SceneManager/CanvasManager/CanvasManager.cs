@@ -56,13 +56,6 @@ public class CanvasManager : MonoBehaviour
 
         VideoCanvas.SetActive(true);
         HumanOnly.SetActive(true);
-        
-        if (_videoReceiver == null)
-            _videoReceiver = HumanPlane.GetComponent<VideoReceiver>();
-        if (_videoReceiver != null)
-            _videoReceiver.StartReceiving();
-        else
-            Debug.LogError("Not Found VideoReceiver");
     }
 
     private void SwitchToGetMaxValuesCanvas()

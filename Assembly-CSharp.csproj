@@ -63,13 +63,13 @@
     <Compile Include="Assets\DataDiagram\DataDiagram\Script\DD_ZoomButton.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ApplicationManager.cs" />
     <Compile Include="Assets\CanvasMaxValueScripts\EmgDataRegularization\EmgDataRegularization.cs" />
-    <Compile Include="Assets\HumanOnlyScripts\VideoReceiver\VideoReceiver.cs" />
+    <Compile Include="Assets\CanvasPrintMaxValuesScripts\SetMaxValues\SetMaxValues.cs" />
     <Compile Include="Assets\Scripts\EnergyBarController\EnergyBarPositionController.cs" />
     <Compile Include="Assets\CanvasMaxValueScripts\MaxEnergyBarHandler\MaxEnergyBarHandler.cs" />
     <Compile Include="Assets\CanvasMaxValueScripts\CounterChanger\CounterChanger.cs" />
     <Compile Include="Assets\Scripts\EMGGraphController\EMGGraphController.cs" />
     <Compile Include="Assets\DataDiagram\DataDiagram\Script\DD_LineButton.cs" />
-    <Compile Include="Assets\CanvasPrintMaxValuesScripts\SetMaxValues\SetMaxValues.cs" />
+    <Compile Include="Assets\CanvasVideoOnlyScripts\VideoReceiver\VideoReceiver.cs" />
     <Compile Include="Assets\CanvasMainScripts\ReadId\SendId.cs" />
     <Compile Include="Assets\Scripts\CameraDataReceiver.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\DragMe.cs" />

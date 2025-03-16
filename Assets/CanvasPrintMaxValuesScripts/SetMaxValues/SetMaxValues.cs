@@ -51,7 +51,7 @@
                     while (true)
                     {
                         var response = await _webSocketUtils.ReceiveResponseAsync();
-                        if(!_webSocketUtils.WebSocketStates) break;
+                        if(!_webSocketUtils.WebSocketIsOpened) break;
                         var message = JsonConvert.DeserializeObject<ResponseMessage>(response);
                         if (message.Type == "data")
                         {

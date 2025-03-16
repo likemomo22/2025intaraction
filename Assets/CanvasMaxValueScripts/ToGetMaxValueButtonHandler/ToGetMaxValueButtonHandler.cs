@@ -13,7 +13,6 @@ public class ToGetMaxValueButtonHandler : MonoBehaviour
     {
         TargetCanvas.SetActive(false);
         
-        PrintMaxButton.onClick.RemoveAllListeners(); // 先清除旧的监听器，防止重复绑定
         PrintMaxButton.onClick.AddListener(SwitchToPrintMaxValuesCanvas);
     }
 

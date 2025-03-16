@@ -9,8 +9,9 @@ using UnityEngine;
 public class WebSocketUtils
 {
     private ClientWebSocket _webSocket;
-    public bool WebSocketStates;
+    public bool WebSocketIsOpened;
 
+    //建立连接
     public async Task<bool> ConnectAsync(string uri)
     {
         _webSocket = new ClientWebSocket();
@@ -23,11 +24,11 @@ public class WebSocketUtils
             if (_webSocket.State == WebSocketState.Open)
             {
                 Debug.Log("✅ WebSocket 连接成功");
-                WebSocketStates = true;
+                WebSocketIsOpened = true;
                 return true;
             }
 
-            WebSocketStates = false;
+            WebSocketIsOpened = false;
             Debug.LogError("❌ WebSocket 连接失败: 未处于 Open 状态");
             return false;
         }
@@ -38,6 +39,7 @@ public class WebSocketUtils
         }
     }
 
+    //发送数据
     public async Task SendMessageAsync(object message)
     {
         try
@@ -56,6 +58,7 @@ public class WebSocketUtils
         }
     }
 
+    //单次接收数据
     public async Task<string> ReceiveResponseAsync()
     {
         try
@@ -92,6 +95,43 @@ public class WebSocketUtils
         }
     }
 
+    //循环接收数据
+    public async Task ReceiveLoopAsync(Action<string> onMessageReceived,int bufferSize=1024*512)
+    {
+        try
+        {
+            if (_webSocket == null || _webSocket.State != WebSocketState.Open)
+            {
+                Debug.LogWarning("⚠️ WebSocket 未连接，无法接收消息");
+                return;
+            }
+
+            var buffer = new byte[bufferSize];
+            while (_webSocket.State == WebSocketState.Open)
+            {
+                var result = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+                if (result.MessageType == WebSocketMessageType.Text)
+                {
+                    var response = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                    // Debug.Log($"✅ 服务器消息: {response}");
+
+                    onMessageReceived?.Invoke(response);
+                }
+                else if (result.MessageType == WebSocketMessageType.Close)
+                {
+                    Debug.Log("🔴 WebSocket 服务器主动关闭连接");
+                    await CloseConnectionAsync();
+                    break;
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            Debug.LogError($"❌ WebSocket 监听失败: {ex.Message}");
+        }
+    }
+    //发送关闭请求
     public async Task SendCloseRequestAsync()
     {
         try
@@ -115,6 +155,7 @@ public class WebSocketUtils
         }
     }
 
+    //关闭链接
     public async Task CloseConnectionAsync()
     {
         if (_webSocket != null && (_webSocket.State == WebSocketState.Open || _webSocket.State == WebSocketState.CloseReceived))
@@ -123,7 +164,7 @@ public class WebSocketUtils
             {
                 await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Client closed", CancellationToken.None);
                 Debug.Log("🔌 WebSocket 连接已关闭");
-                WebSocketStates = false;
+                WebSocketIsOpened = false;
             }
             catch (Exception ex)
             {

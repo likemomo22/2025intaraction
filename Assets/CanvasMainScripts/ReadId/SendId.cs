@@ -51,7 +51,7 @@ public class SendId : MonoBehaviour
         }
         finally
         {
-            if (_webSocketUtils.WebSocketStates)
+            if (_webSocketUtils.WebSocketIsOpened)
             {
                 await _webSocketUtils.CloseConnectionAsync();
             }
