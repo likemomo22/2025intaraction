@@ -85,7 +85,7 @@ public class VideoReceiver : MonoBehaviour
         var videoData = FromHexString(combinedData.video);
 
         //背景透明化
-        LoadTransparentTexture(videoData);
+        // LoadTransparentTexture(videoData);
         //在纹理上绘制点
         DrawLandmarks(videoData);
     }

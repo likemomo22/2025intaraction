@@ -46,14 +46,6 @@ public class ThirdStepNextButtonHandler:MonoBehaviour
 
         TargetCanvas.SetActive(true);
         Human.SetActive(true);
-
-        if (_videoAndLandMarksReceiver !=null)
-        {
-            _videoAndLandMarksReceiver.StartReceiving();
-        }
-        else
-        {
-            Debug.LogError("Not Found VideoAndLandMarksReceiver");
-        }
+        
     }
 }

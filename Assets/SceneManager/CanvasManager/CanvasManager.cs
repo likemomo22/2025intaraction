@@ -71,12 +71,6 @@ public class CanvasManager : MonoBehaviour
 
         GameCanvas.SetActive(true);
         Human.SetActive(true);
-
-        if (_videoAndLandMarksReceiver == null)
-            _videoAndLandMarksReceiver = Plane.GetComponent<VideoAndLandMarksReceiver>();
-        if (_videoAndLandMarksReceiver != null)
-            _videoAndLandMarksReceiver.StartReceiving();
-        else
-            Debug.LogError("Not Found VideoAndLandMarksReceiver");
+        
     }
 }
